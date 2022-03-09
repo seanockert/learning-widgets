@@ -39,7 +39,6 @@
           seconds: 0,
           status: 'editing',
           mounted() {
-            console.log('props', props);
             // Load duration from local storage
             const savedDuration = localStorage.getItem(this.savedKey);
             if (savedDuration) {
@@ -351,19 +350,6 @@
               <button class="button button-small" @click="addTime(300)">
                 +5m
               </button>
-
-              <svg height="20" width="20" viewBox="0 0 20 20">
-                <circle r="10" cx="10" cy="10" fill="black" />
-                <circle
-                  r="5"
-                  cx="10"
-                  cy="10"
-                  fill="none"
-                  stroke="tomato"
-                  stroke-width="10"
-                  stroke-dasharray="calc(35 * 31.42 / 100) 31.42"
-                />
-              </svg>
             </div>
           </div>
           <div v-show="currentTime === 0" class="timer-end">Time's Up!</div>
