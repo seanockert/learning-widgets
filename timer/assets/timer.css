@@ -134,6 +134,7 @@ ol[class] {
   border-radius: 8px;
   box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
   display: inline-block;
+  margin: 0.375rem;
 }
 
 .timer-container-inner {
@@ -248,4 +249,17 @@ code {
   line-height: 1;
   padding: 0.1875rem;
   margin-bottom: 0.1875rem;
+}
+
+#container > button {
+  background-color: transparent;
+  color: #767677;
+  cursor: pointer;
+  display: block;
+  margin: 0 auto;
+  padding: 0.75rem;
+}
+
+#container > button:hover {
+  color: #477820;
 }

@@ -31,12 +31,12 @@
           currentTime: 0,
           duration: props.duration,
           hours: 0,
+          minutes: 0,
+          seconds: 0,
           increment: 30,
           interval: null,
-          minutes: 0,
           progress: 0,
           savedKey: 'so_timer',
-          seconds: 0,
           status: 'editing',
           mounted() {
             // Load duration from local storage
@@ -44,13 +44,13 @@
             if (savedDuration) {
               this.duration = parseInt(savedDuration);
             }
-            
+
             this.initTimer();
 
             window.addEventListener('keydown', (e) => {
               // Spacebar toggle pause
               if (e.keyCode == 32) {
-                if (this.status === 'editing') {
+                if (this.status === 'editing' && this.duration > 0) {
                   this.startTimer();
                 } else if (this.status === 'ended') {
                   this.initTimer();
@@ -130,7 +130,6 @@
             musicChill.currentTime = 0;
             chime.play();
           },
-
           updateProgressBar() {
             this.progress = Math.floor(
               ((this.activeDuration - this.currentTime) / this.activeDuration) *
@@ -157,18 +156,18 @@
             this.currentTime = this.duration;
           },
           decreaseDuration() {
-            if (this.duration >= this.increment) {
-              this.duration -= this.increment;
+            this.updateDuration(this.duration - this.increment);
+          },
+          increaseDuration() {
+            this.updateDuration(this.duration + this.increment);
+          },
+          updateDuration(duration) {
+            if (duration > 0) {
+              this.duration = duration;
               this.initTimer();
               this.saveSettings();
               this.playClick();
             }
-          },
-          increaseDuration() {
-            this.duration += this.increment;
-            this.initTimer();
-            this.saveSettings();
-            this.playClick();
           },
           inputHMS(e) {
             // Restrict max value for H:M:S to 59:59:59
@@ -210,6 +209,20 @@
       createApp({
         Timer,
       }).mount();
+
+      // Add a new timer
+      document.getElementById('add-timer').addEventListener('click', () => {
+        document
+          .getElementById('container')
+          .insertAdjacentHTML(
+            'afterbegin',
+            '<div v-scope="Timer({duration: 15})" @vue:mounted="mounted"></div>'
+          );
+
+        createApp({
+          Timer,
+        }).mount();
+      });
     </script>
   </head>
   <body>
@@ -327,20 +340,10 @@
           <div v-show="currentTime > 0">
             <ol class="list-timer flex">
               <li v-if="hours > 0">
-                <template v-if="hours < 10"
-                  >0</template
-                >{{ hours }}
+                <template v-if="hours < 10">0</template>{{ hours }}
               </li>
-              <li>
-                <template v-if="minutes < 10"
-                  >0</template
-                >{{ minutes }}
-              </li>
-              <li>
-                <template v-if="seconds < 10"
-                  >0</template
-                >{{ seconds }}
-              </li>
+              <li><template v-if="minutes < 10">0</template>{{ minutes }}</li>
+              <li><template v-if="seconds < 10">0</template>{{ seconds }}</li>
             </ol>
 
             <div class="timer-options">
@@ -397,7 +400,10 @@
       </div>
     </template>
 
-    <div v-scope="Timer({duration: 15})" @vue:mounted="mounted"></div>
+    <div id="container">
+      <div v-scope="Timer({duration: 15})" @vue:mounted="mounted"></div>
+      <button id="add-timer">+ Add timer</button>
+    </div>
 
     <div class="callout">
       Keyboard shortcuts:
