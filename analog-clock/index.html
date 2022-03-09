@@ -501,12 +501,12 @@
     <div
       v-scope="ClockHands({markerIncrements: 12, theme: ''})"
       class="clock-container"
-      @mounted="mounted"
+      @vue:mounted="mounted"
     ></div>
     <div
       v-scope="ClockHands({markerIncrements: 60, theme: 'theme-mouse'})"
       class="clock-container theme-mouse"
-      @mounted="mounted"
+      @vue:mounted="mounted"
     ></div>
   </body>
 </html>

@@ -39,12 +39,13 @@
           seconds: 0,
           status: 'editing',
           mounted() {
+            console.log('props', props);
             // Load duration from local storage
             const savedDuration = localStorage.getItem(this.savedKey);
             if (savedDuration) {
               this.duration = parseInt(savedDuration);
             }
-
+            
             this.initTimer();
 
             window.addEventListener('keydown', (e) => {
@@ -410,7 +411,7 @@
       </div>
     </template>
 
-    <div v-scope="Timer({duration: 15})" @mounted="mounted"></div>
+    <div v-scope="Timer({duration: 15})" @vue:mounted="mounted"></div>
 
     <div class="callout">
       Keyboard shortcuts:
