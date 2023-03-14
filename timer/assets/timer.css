@@ -263,3 +263,18 @@ code {
 #container > button:hover {
   color: #477820;
 }
+
+@media screen and (max-width: 600px) {
+  .timer-container-inner > * {
+    padding: 1.5rem 0.5rem;
+  }
+
+  .list-timer {
+    font-size: 2.6rem;
+  }
+
+  .list-timer input {
+    width: 3.2rem;
+  }
+}
+
